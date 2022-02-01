@@ -1,5 +1,5 @@
 //
-//  WordTableViewController.swift
+//  GuessingViewController.swift
 //  PR_1
 //
 //  Created by Станислав Зверьков on 31.01.2022.
@@ -7,7 +7,7 @@
 
 import UIKit
 
-class WordTableVC: UIViewController {
+class NewWordsVC: UIViewController {
 
     override func viewDidLoad() {
         super.viewDidLoad()
