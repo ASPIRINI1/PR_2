@@ -7,51 +7,55 @@
 
 import Foundation
 import CoreData
+import UIKit
 
 class CoreDataManager{
-    private let modelName: String
+  
+    private let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
+    private var model = [Words]()
     
-    init(modelName:String){
-        self.modelName = modelName
+    init() {
+        getAllItems()
     }
     
-    private lazy var managedObjectModel: NSManagedObjectModel? = {
-        guard let modelURL = Bundle.main.url(forResource: self.modelName, withExtension: "mmomd") else { return nil }
-        let managerObjectModel = NSManagedObjectModel(contentsOf: modelURL)
-        return managerObjectModel
-    }()
-    
-    private var presistentStoreURL: NSURL {
-        let storeName = "\(modelName).sqlite"
-        
-        let filemanager = FileManager.default
-        let documentDirectoryURL = filemanager.urls(for: .documentDirectory, in: .userDomainMask)[0]
-        return documentDirectoryURL.appendingPathComponent(storeName) as NSURL
-    }
-    
-    private lazy var presistentStoreCoordinator:NSPersistentStoreCoordinator? = {
-        guard let managedObjectModel = self.managedObjectModel else { return nil }
-        let presistentStoreURL = self.presistentStoreURL
-        let presistentStoreCoorditator = NSPersistentStoreCoordinator(managedObjectModel: managedObjectModel)
-        
-        do {
-            let options = [NSMigratePersistentStoresAutomaticallyOption: true, NSInferMappingModelAutomaticallyOption: true]
-            try presistentStoreCoorditator.addPersistentStore(ofType: NSSQLiteStoreType, configurationName: nil, at: presistentStoreURL as URL, options: options)
+    func getAllItems(){
+        do{
+            model = try context.fetch(Words.fetchRequest())
+            print(model.count, "Count")
         } catch {
-            let error = error as NSError
-            print("\(error.localizedDescription)")
+            print("Getting error")
         }
-        return presistentStoreCoorditator
-    }()
+    }
     
-    private lazy var privateManagedObjectContext: NSManagedObjectContext = {
-        let managedObjectContext = NSManagedObjectContext(concurrencyType: .privateQueueConcurrencyType)
-        return managedObjectContext
-    }()
+    func addItem(engText: String, rusText:String){
+        if engText != "" && rusText != ""{
+            let newItem = Words(context: context)
+            newItem.eng = engText
+            newItem.rus = rusText
+            
+            do{
+                try context.save()
+            } catch {
+                print("Saving error")
+            }
+        } else {
+            print("Empty String")
+        }
+    }
     
-    private(set)lazy var mainManagedObjectContext: NSManagedObjectContext = {
-        let managedContext = NSManagedObjectContext(concurrencyType: .mainQueueConcurrencyType)
-        managedContext.parent = self.privateManagedObjectContext
-        return managedContext
-    }()
+    func deleteItem(item: Int){
+        context.delete(model[item])
+        model.remove(at: item)
+        do{
+            try context.save()
+        } catch {
+            print("Deleting error")
+        }
+    }
+    
+    func getAllWords() -> [Words]{
+        return model
+    }
+  
 }
+

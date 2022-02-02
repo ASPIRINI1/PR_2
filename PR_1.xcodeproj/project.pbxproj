@@ -16,9 +16,9 @@
 		DEB9632C27A844A90084ED7E /* NewWordsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB9632B27A844A90084ED7E /* NewWordsVC.swift */; };
 		DEB9632E27A844C10084ED7E /* WordsTableVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB9632D27A844C10084ED7E /* WordsTableVC.swift */; };
 		DEB9633027A844DC0084ED7E /* KnownWordsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB9632F27A844DC0084ED7E /* KnownWordsVC.swift */; };
-		DEB9633327A844F80084ED7E /* Words.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB9633227A844F80084ED7E /* Words.swift */; };
 		DEB9633527A8454E0084ED7E /* AddWordVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB9633427A8454E0084ED7E /* AddWordVC.swift */; };
 		DEB9633727A847F60084ED7E /* CoreDataManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEB9633627A847F60084ED7E /* CoreDataManager.swift */; };
+		DEDA187427A9CCAB00764B04 /* KnownWordsTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = DEDA187327A9CCAB00764B04 /* KnownWordsTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -33,9 +33,9 @@
 		DEB9632B27A844A90084ED7E /* NewWordsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NewWordsVC.swift; sourceTree = "<group>"; };
 		DEB9632D27A844C10084ED7E /* WordsTableVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WordsTableVC.swift; sourceTree = "<group>"; };
 		DEB9632F27A844DC0084ED7E /* KnownWordsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownWordsVC.swift; sourceTree = "<group>"; };
-		DEB9633227A844F80084ED7E /* Words.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Words.swift; sourceTree = "<group>"; };
 		DEB9633427A8454E0084ED7E /* AddWordVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AddWordVC.swift; sourceTree = "<group>"; };
 		DEB9633627A847F60084ED7E /* CoreDataManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CoreDataManager.swift; sourceTree = "<group>"; };
+		DEDA187327A9CCAB00764B04 /* KnownWordsTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = KnownWordsTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -85,8 +85,9 @@
 			isa = PBXGroup;
 			children = (
 				DEB9632B27A844A90084ED7E /* NewWordsVC.swift */,
-				DEB9632D27A844C10084ED7E /* WordsTableVC.swift */,
 				DEB9632F27A844DC0084ED7E /* KnownWordsVC.swift */,
+				DEDA187327A9CCAB00764B04 /* KnownWordsTableViewCell.swift */,
+				DEB9632D27A844C10084ED7E /* WordsTableVC.swift */,
 				DEB9633427A8454E0084ED7E /* AddWordVC.swift */,
 			);
 			path = ViewControllers;
@@ -95,7 +96,6 @@
 		DEB9633127A844E90084ED7E /* Model */ = {
 			isa = PBXGroup;
 			children = (
-				DEB9633227A844F80084ED7E /* Words.swift */,
 				DEB9633627A847F60084ED7E /* CoreDataManager.swift */,
 			);
 			path = Model;
@@ -173,12 +173,12 @@
 			buildActionMask = 2147483647;
 			files = (
 				DEB9633527A8454E0084ED7E /* AddWordVC.swift in Sources */,
-				DEB9633327A844F80084ED7E /* Words.swift in Sources */,
 				DEB9632E27A844C10084ED7E /* WordsTableVC.swift in Sources */,
 				DEB9631427A83B410084ED7E /* AppDelegate.swift in Sources */,
 				DEB9633027A844DC0084ED7E /* KnownWordsVC.swift in Sources */,
 				DEB9631627A83B410084ED7E /* SceneDelegate.swift in Sources */,
 				DEB9633727A847F60084ED7E /* CoreDataManager.swift in Sources */,
+				DEDA187427A9CCAB00764B04 /* KnownWordsTableViewCell.swift in Sources */,
 				DEB9631E27A83B410084ED7E /* PR_1.xcdatamodeld in Sources */,
 				DEB9632C27A844A90084ED7E /* NewWordsVC.swift in Sources */,
 			);

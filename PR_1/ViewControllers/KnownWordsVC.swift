@@ -6,6 +6,7 @@
 //
 
 import UIKit
+import CoreData
 
 class KnownWordsVC: UIViewController {
 
@@ -16,4 +17,9 @@ class KnownWordsVC: UIViewController {
     }
     
 
+
+    
+
 }
+
+

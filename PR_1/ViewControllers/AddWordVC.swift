@@ -10,20 +10,40 @@ import CoreData
 
 class AddWordVC: UIViewController {
 
+    @IBOutlet weak var engTextField: UITextField!
+    @IBOutlet weak var rusTextField: UITextField!
+    
+    let coreData = CoreDataManager()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
-
-
     }
     
     
-    func saveWord(rus:String, eng:String){
-        let appDelegate = UIApplication.shared.delegate as! AppDelegate
-        let context = appDelegate.persistentContainer.viewContext
+    @IBAction func addButton(_ sender: Any) {
         
-        guard let entity = NSEntityDescription.entity(forEntityName: "Words", in: context) else { return }
+        guard let engText = engTextField.text else { return }
+        guard let rusText = rusTextField.text else { return }
+        let rusCharacters = "йцукенгшщзхъфывапролджэёячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЁЯЧСМИТЬБЮ"
+        let engCharacters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
+        engTextField.text = engText.filter { engCharacters.contains($0) }
+        rusTextField.text = rusText.filter { rusCharacters.contains($0) }
         
+        if (rusTextField.text != nil && engTextField.text != nil) && (rusTextField.text != "" && engTextField.text != ""){
+            
+            coreData.addItem(engText: engTextField.text!, rusText: rusTextField.text!)
+            
+            let successAletr = UIAlertController(title: "Добавление успешно", message: "Слово добавлено в архив слов.", preferredStyle: .alert)
+            successAletr.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(successAletr, animated: true, completion: nil)
+            
+        } else {
+            let failAletr = UIAlertController(title: "Слово не добавлено", message: "Слово не может быть добавлено в архив слов. Проверьте правильность ввода.", preferredStyle: .alert)
+            failAletr.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
+            self.present(failAletr, animated: true, completion: nil)
+        }
     }
-
-
+    
+    
+    
 }
