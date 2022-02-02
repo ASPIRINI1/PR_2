@@ -43,9 +43,19 @@ class CoreDataManager{
         }
     }
     
-    func deleteItem(item: Int){
-        context.delete(model[item])
-        model.remove(at: item)
+    func deleteItem(itemIndex: Int){
+        context.delete(model[itemIndex])
+//        model.remove(at: itemIndex)
+        do{
+            try context.save()
+        } catch {
+            print("Deleting error")
+        }
+    }
+    
+    func updateItem(itemIndex: Int){
+        context.delete(model[itemIndex])
+        model.remove(at: itemIndex)
         do{
             try context.save()
         } catch {
@@ -55,6 +65,26 @@ class CoreDataManager{
     
     func getAllWords() -> [Words]{
         return model
+    }
+    
+    func getKnownWordsCount() -> Int{
+        var count = 0
+        for word in model{
+            if word.known == true{
+                count += 1
+            }
+        }
+        return count
+    }
+    
+    func getUnKnownWordsCount() -> Int{
+        var count = 0
+        for word in model{
+            if word.known == false{
+                count += 1
+            }
+        }
+        return count
     }
   
 }

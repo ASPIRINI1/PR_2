@@ -1,16 +1,17 @@
 //
-//  KnownWordsTableViewCell.swift
+//  KnownWrodsTableViewCell.swift
 //  PR_1
 //
-//  Created by Станислав Зверьков on 01.02.2022.
+//  Created by Станислав Зверьков on 02.02.2022.
 //
 
 import UIKit
 
-class KnownWordsTableViewCell: UITableViewCell {
+class KnownWrodsTableViewCell: UITableViewCell {
 
     @IBOutlet weak var rusLabel: UILabel!
     @IBOutlet weak var engLabel: UILabel!
+    
     
     override func awakeFromNib() {
         super.awakeFromNib()
@@ -23,5 +24,4 @@ class KnownWordsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
-  
 }

@@ -1,5 +1,5 @@
 //
-//  WordTableViewController.swift
+//  KnownWordsViewController.swift
 //  PR_1
 //
 //  Created by Станислав Зверьков on 31.01.2022.
@@ -8,57 +8,55 @@
 import UIKit
 import CoreData
 
-class WordsTableVC: UIViewController {
-    
+class KnownWordsVC: UIViewController {
+
     @IBOutlet weak var tableView: UITableView!
     
-    let context = (UIApplication.shared.delegate as! AppDelegate).persistentContainer.viewContext
-    var model = [Words]()
     let coreData = CoreDataManager()
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
     
-    override func viewWillAppear(_ animated: Bool) {
-        coreData.getAllItems()
-        tableView.reloadData()
-    }
-
 }
+
 
 //MARK: - UItableView Delagate & DataSource
 
-extension WordsTableVC: UITableViewDelegate, UITableViewDataSource{
+extension KnownWordsVC: UITableViewDelegate, UITableViewDataSource{
     
     //MARK: DataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return coreData.getAllWords().count
+        return coreData.getKnownWordsCount()
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "WordsTableCell", for: indexPath) as! KnownWordsTableViewCell
-
-        cell.engLabel.text = coreData.getAllWords()[indexPath.row].eng
-        cell.rusLabel.text = coreData.getAllWords()[indexPath.row].rus
+        let cell = tableView.dequeueReusableCell(withIdentifier: "NewWordsCell", for: indexPath) as! KnownWrodsTableViewCell
         
+        if coreData.getAllWords()[indexPath.row].known == true{
+        cell.rusLabel.text = coreData.getAllWords()[indexPath.row].rus
+        cell.engLabel.text = coreData.getAllWords()[indexPath.row].eng
+        
+        }
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
-            coreData.deleteItem(item: indexPath.row)
+//            coreData.deleteItem(item: indexPath.row)
             tableView.reloadData()
-            print(coreData.getAllWords().count, "count ")
         }
     }
     
-    //MARK:  Delagate
+    
+    //MARK: Delagate
     
     func tableView(_ tableView: UITableView, editingStyleForRowAt indexPath: IndexPath) -> UITableViewCell.EditingStyle {
         return .delete
     }
+    
 }
