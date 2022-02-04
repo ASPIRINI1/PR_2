@@ -23,4 +23,21 @@ class NewWordsTableViewCell: UITableViewCell {
         // Configure the view for the selected state
     }
 
+    func setCellColor(color:String,completion: @escaping()->()){
+        switch color{
+        case "green":
+            self.backgroundColor = .green
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { t in
+                self.backgroundColor = .white
+                completion()
+            }
+        case "red":
+            self.backgroundColor = .green
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { t in
+                self.backgroundColor = .white
+                completion()
+            }
+        default: break
+        }
+    }
 }
