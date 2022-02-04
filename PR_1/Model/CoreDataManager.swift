@@ -86,6 +86,10 @@ class CoreDataManager{
         }
         return count
     }
+    
+    func setKnown(index:Int,known:Bool){
+        model[index].known = known
+    }
   
 }
 

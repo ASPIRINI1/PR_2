@@ -3,9 +3,10 @@
     <entity name="Words" representedClassName="Words" syncable="YES" codeGenerationType="class">
         <attribute name="eng" optional="YES" attributeType="String"/>
         <attribute name="known" optional="YES" attributeType="Boolean" defaultValueString="NO" usesScalarValueType="YES"/>
+        <attribute name="rightSelection" optional="YES" attributeType="Integer 64" defaultValueString="0" usesScalarValueType="YES"/>
         <attribute name="rus" optional="YES" attributeType="String"/>
     </entity>
     <elements>
-        <element name="Words" positionX="-63" positionY="-18" width="128" height="74"/>
+        <element name="Words" positionX="-63" positionY="-18" width="128" height="89"/>
     </elements>
 </model>

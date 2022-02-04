@@ -36,6 +36,8 @@ class AddWordVC: UIViewController {
             let successAletr = UIAlertController(title: "Добавление успешно", message: "Слово добавлено в архив слов.", preferredStyle: .alert)
             successAletr.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(successAletr, animated: true, completion: nil)
+            engTextField.text = ""
+            rusTextField.text = ""
             
         } else {
             let failAletr = UIAlertController(title: "Слово не добавлено", message: "Слово не может быть добавлено в архив слов. Проверьте правильность ввода.", preferredStyle: .alert)
