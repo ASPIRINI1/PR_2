@@ -18,6 +18,7 @@ class KnownWordsVC: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        
     }
     
     
@@ -37,19 +38,22 @@ extension KnownWordsVC: UITableViewDelegate, UITableViewDataSource{
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        let cell = tableView.dequeueReusableCell(withIdentifier: "NewWordsCell", for: indexPath) as! KnownWrodsTableViewCell
+        let cell = tableView.dequeueReusableCell(withIdentifier: "KnownWordsCell", for: indexPath) as! KnownWrodsTableViewCell
         
         if coreData.getAllWords()[indexPath.row].known == true{
         cell.rusLabel.text = coreData.getAllWords()[indexPath.row].rus
         cell.engLabel.text = coreData.getAllWords()[indexPath.row].eng
         
+        } else {
+            cell.rusLabel.text = "uncn"
         }
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
+//        let selectedCell = tableView(tableView, cellForRowAt: indexPath) as! KnownWrodsTableViewCell
         if editingStyle == .delete{
-//            coreData.deleteItem(item: indexPath.row)
+            coreData.updateItem(engWord: "word")
             tableView.reloadData()
         }
     }

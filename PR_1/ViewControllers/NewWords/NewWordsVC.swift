@@ -13,11 +13,33 @@ class NewWordsVC: UIViewController {
     
     let coreData = CoreDataManager()
     
+    var uncorrectWords = [Words]()
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-
+        
+//        coreData.setDefault()
+//        for word in coreData.getAllWords(){
+//            uncorrectWords.append(word)
+//        }
+        
+//        for word in 0...coreData.getAllWords().count-1{
+//            let tempEngWord = coreData.getAllWords()[word].eng ??  "nil"
+//            let tempRusWord = coreData.getAllWords()[word].rus ?? "nil"
+////            var tempWords = Words()
+////            tempWords.rus = tempRusWord
+////            tempWords.eng = tempEngWord
+//            uncorrectWords.append(Words())
+//            uncorrectWords[word].rus = tempRusWord
+//            uncorrectWords[word].eng = tempEngWord
+//        }
+//
+//        for word  in 0...uncorrectWords.count-1{
+//            uncorrectWords[word].eng = " "
+//        }
+        
     }
     
 }
@@ -41,7 +63,7 @@ extension NewWordsVC: UITableViewDelegate, UITableViewDataSource{
                 countOfKnown += 1
             }
         }
-        
+
         if coreData.getAllWords()[indexPath.row].known == false{
             if indexPath.row <= countOfUncorrectPairs{
                 cell.rusLabel.text = coreData.getAllWords()[Int.random(in: 0...coreData.getAllWords().count-(1+countOfKnown))].rus
@@ -50,8 +72,11 @@ extension NewWordsVC: UITableViewDelegate, UITableViewDataSource{
             }
             cell.engLabel.text = coreData.getAllWords()[indexPath.row].eng
         } else {
-            
+            cell.engLabel.text = "Known"
         }
+        
+        
+        
         return cell
     }
     
@@ -70,6 +95,7 @@ extension NewWordsVC: UITableViewDelegate, UITableViewDataSource{
             
             if coreData.getAllWords()[indexPath.row].rightSelection == 3{
                 coreData.getAllWords()[indexPath.row].known = true
+                coreData.setKnown(index: indexPath.row, known: true)
                 tableView.reloadData()
             }
             } else {
