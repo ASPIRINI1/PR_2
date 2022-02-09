@@ -14,6 +14,7 @@ class NewWordsVC: UIViewController {
     let coreData = CoreDataManager()
     
     var uncorrectWords = [Words]()
+    var countOfUncorrectPairs = 0
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -42,6 +43,17 @@ class NewWordsVC: UIViewController {
         
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        coreData.getAllItems()
+        tableView.reloadData()
+    }
+    
+    @IBAction func setDefaults(_ sender: Any) {
+        coreData.setDefault()
+        coreData.getAllItems()
+        tableView.reloadData()
+    }
+    
 }
 
 //MARK: - UItableView Delagate & DataSource
@@ -51,30 +63,38 @@ extension NewWordsVC: UITableViewDelegate, UITableViewDataSource{
     //MARK: DataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return coreData.getUnKnownWordsCount()
+         countOfUncorrectPairs = Int.random(in: 0...coreData.getUnKnownWords().count-1)
+        print("countOfUncorrectPairs ", countOfUncorrectPairs)
+        return coreData.getUnKnownWords().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewWordsCell", for: indexPath) as! NewWordsTableViewCell
-        let countOfUncorrectPairs = Int.random(in: 0 ... coreData.getAllWords().count-1)
-        var countOfKnown = 0
-        for word in 0...coreData.getAllWords().count-1{
-            if coreData.getAllWords()[word].known == true{
-                countOfKnown += 1
-            }
-        }
-
-        if coreData.getAllWords()[indexPath.row].known == false{
-            if indexPath.row <= countOfUncorrectPairs{
-                cell.rusLabel.text = coreData.getAllWords()[Int.random(in: 0...coreData.getAllWords().count-(1+countOfKnown))].rus
-            } else {
-                cell.rusLabel.text = coreData.getAllWords()[indexPath.row].rus
-            }
-            cell.engLabel.text = coreData.getAllWords()[indexPath.row].eng
+//        let countOfUncorrectPairs = Int.random(in: 0 ... coreData.getAllWords().count-1)
+//        var countOfKnown = 0
+//        for word in 0...coreData.getAllWords().count-1{
+//            if coreData.getAllWords()[word].known == true{
+//                countOfKnown += 1
+//            }
+//        }
+//
+//        if coreData.getAllWords()[indexPath.row].known == false{
+//            if indexPath.row <= countOfUncorrectPairs{
+//                cell.rusLabel.text = coreData.getAllWords()[Int.random(in: 0...coreData.getAllWords().count-(1+countOfKnown))].rus
+//            } else {
+//                cell.rusLabel.text = coreData.getAllWords()[indexPath.row].rus
+//            }
+//            cell.engLabel.text = coreData.getAllWords()[indexPath.row].eng
+//        } else {
+//            cell.engLabel.text = "Known"
+//        }
+        if countOfUncorrectPairs > 0{
+            cell.rusLabel.text = coreData.getUnKnownWords()[Int.random(in: 0...coreData.getUnKnownWords().count-1)].rus
+            cell.engLabel.text = coreData.getUnKnownWords()[Int.random(in: 0...coreData.getUnKnownWords().count-1)].eng
         } else {
-            cell.engLabel.text = "Known"
+            cell.rusLabel.text = coreData.getUnKnownWords()[indexPath.row].rus
+            cell.engLabel.text = coreData.getUnKnownWords()[indexPath.row].eng
         }
-        
         
         
         return cell
@@ -86,29 +106,30 @@ extension NewWordsVC: UITableViewDelegate, UITableViewDataSource{
         
         let selectedCell = tableView.cellForRow(at: indexPath) as! NewWordsTableViewCell
         
-        if coreData.getAllWords()[indexPath.row].eng == selectedCell.engLabel.text && coreData.getAllWords()[indexPath.row].rus == selectedCell.rusLabel.text{
+
+        if selectedCell.engLabel.text == coreData.getUnKnownWords()[indexPath.row].eng && selectedCell.rusLabel.text == coreData.getUnKnownWords()[indexPath.row].rus{
             
-            coreData.getAllWords()[indexPath.row].rightSelection += 1
-            selectedCell.setCellColor(color: "green") {
-            tableView.reloadData()
-            }
+            coreData.getUnKnownWords()[indexPath.row].rightSelection += 1
+            coreData.saveChanges()
             
-            if coreData.getAllWords()[indexPath.row].rightSelection == 3{
-                coreData.getAllWords()[indexPath.row].known = true
-                coreData.setKnown(index: indexPath.row, known: true)
+            selectedCell.setCellColor(color: .green) {
                 tableView.reloadData()
             }
-            } else {
-                selectedCell.backgroundColor = .red
-                  
-                let alertController = UIAlertController(title: "Не верно", message: "Вы выбрали неправильное слово. Повторите попытку.", preferredStyle: .alert)
-                
-                alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
-                    selectedCell.backgroundColor = .white }))
-                
-                self.present(alertController, animated: true, completion: nil)
-                coreData.getAllWords()[indexPath.row].rightSelection = 0
-            }
+            
+        } else {
+            let alertController = UIAlertController(title: "Не верно", message: "Вы выбрали неправильное слово. Повторите попытку.", preferredStyle: .alert)
+
+            alertController.addAction(UIAlertAction(title: "OK", style: .default, handler: { action in
+                selectedCell.backgroundColor = .white }))
+            self.present(alertController, animated: true, completion: nil)
+
+            coreData.getAllWords()[indexPath.row].rightSelection = 0
+        }
+        
+        if coreData.getUnKnownWords()[indexPath.row].rightSelection == 3{
+            coreData.setKnown(engWord: selectedCell.engLabel.text ?? "nil", known: true)
+            tableView.reloadData()
+        }
     }
     
 }

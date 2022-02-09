@@ -49,8 +49,8 @@ extension WordsTableVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
             coreData.deleteItem(itemIndex: indexPath.row)
+            coreData.getAllItems()
             tableView.reloadData()
-            print(coreData.getAllWords().count, "count ")
         }
     }
     

@@ -33,11 +33,7 @@ class CoreDataManager{
             newItem.eng = engText
             newItem.rus = rusText
             
-            do{
-                try context.save()
-            } catch {
-                print("Saving error")
-            }
+            saveChanges()
         } else {
             print("Empty String")
         }
@@ -73,35 +69,36 @@ class CoreDataManager{
         return model
     }
     
-    func getKnownWordsCount() -> Int{
-        var count = 0
+    func getKnownWords() -> [Words]{
+        var words = [Words]()
         for word in model{
             if word.known == true{
-                count += 1
+                words.append(word)
             }
         }
-        return count
+        return words
     }
     
-    func getUnKnownWordsCount() -> Int{
-        var count = 0
+    func getUnKnownWords() -> [Words]{
+        var words = [Words]()
         for word in model{
             if word.known == false{
-                count += 1
+                words.append(word)
             }
         }
-        return count
+        return words
     }
     
-    func setKnown(index:Int,known:Bool){
-        model[index].known = known
-        if context.hasChanges{
-        do{
-            try context.save()
-        } catch {
-            print("Saving error")
+    func setKnown(engWord: String, known: Bool){
+//        model[index].known = known
+        for word in model{
+            if word.eng == engWord{
+                word.known = known
+                print("set known ", word.rus, word.eng)
+            }
         }
-    }
+        saveChanges()
+        getAllItems()
     }
     
     func setDefault(){
@@ -109,6 +106,10 @@ class CoreDataManager{
             model.known = false
             model.rightSelection = 0
         }
+       saveChanges()
+    }
+    
+    func saveChanges(){
         do{
             try context.save()
         } catch {
