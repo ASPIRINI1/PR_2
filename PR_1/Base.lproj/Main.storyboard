@@ -196,16 +196,7 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Новые слова" id="L6G-Os-hFl">
-                        <barButtonItem key="leftBarButtonItem" style="plain" id="cca-Gs-xmk">
-                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="xke-9i-4kh">
-                                <rect key="frame" x="20" y="5" width="88" height="34.5"/>
-                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                                <buttonConfiguration key="configuration" style="plain" title="Def"/>
-                                <connections>
-                                    <action selector="setDefaults:" destination="JJy-rI-GdK" eventType="touchUpInside" id="ejB-Tf-ZVZ"/>
-                                </connections>
-                            </button>
-                        </barButtonItem>
+                        <barButtonItem key="leftBarButtonItem" style="plain" systemItem="refresh" id="cca-Gs-xmk"/>
                     </navigationItem>
                     <connections>
                         <outlet property="tableView" destination="Iez-Tb-Kxe" id="Ii5-ZJ-Pg7"/>
@@ -388,6 +379,17 @@
                         </constraints>
                     </view>
                     <navigationItem key="navigationItem" title="Арихв слов" id="gh1-Dr-8bd">
+                        <barButtonItem key="leftBarButtonItem" style="plain" id="6oN-m7-GPz">
+                            <button key="customView" opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="system" lineBreakMode="middleTruncation" id="jdH-a5-Xnb">
+                                <rect key="frame" x="20" y="5" width="92" height="34.5"/>
+                                <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                                <state key="normal" title="Button"/>
+                                <buttonConfiguration key="configuration" style="plain" title="Default"/>
+                            </button>
+                            <connections>
+                                <action selector="setDefaults:" destination="4ZN-04-YZ2" id="pO9-TS-Sjk"/>
+                            </connections>
+                        </barButtonItem>
                         <barButtonItem key="rightBarButtonItem" systemItem="add" id="3i2-He-cQr">
                             <connections>
                                 <segue destination="xoe-8m-Xo3" kind="show" id="Sk4-1C-xHN"/>

@@ -24,8 +24,10 @@ class AddWordVC: UIViewController {
         
         guard let engText = engTextField.text else { return }
         guard let rusText = rusTextField.text else { return }
+        
         let rusCharacters = "йцукенгшщзхъфывапролджэёячсмитьбюЙЦУКЕНГШЩЗХЪФЫВАПРОЛДЖЭЁЯЧСМИТЬБЮ"
         let engCharacters = "qwertyuiopasdfghjklzxcvbnmQWERTYUIOPASDFGHJKLZXCVBNM"
+        
         engTextField.text = engText.filter { engCharacters.contains($0) }
         rusTextField.text = rusText.filter { rusCharacters.contains($0) }
         
@@ -36,11 +38,13 @@ class AddWordVC: UIViewController {
             let successAletr = UIAlertController(title: "Добавление успешно", message: "Слово добавлено в архив слов.", preferredStyle: .alert)
             successAletr.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(successAletr, animated: true, completion: nil)
+            
             engTextField.text = ""
             rusTextField.text = ""
             
         } else {
             let failAletr = UIAlertController(title: "Слово не добавлено", message: "Слово не может быть добавлено в архив слов. Проверьте правильность ввода.", preferredStyle: .alert)
+            
             failAletr.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))
             self.present(failAletr, animated: true, completion: nil)
         }

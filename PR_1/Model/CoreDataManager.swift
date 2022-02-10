@@ -41,22 +41,6 @@ class CoreDataManager{
     
     func deleteItem(itemIndex: Int){
         context.delete(model[itemIndex])
-//        model.remove(at: itemIndex)
-        do{
-            try context.save()
-        } catch {
-            print("Deleting error")
-        }
-    }
-    
-    func updateItem(engWord:String){
- 
-        for i in 0...model.count-1 {
-            if model[i].eng == engWord{
-                model[i].known = false
-            }
-        }
-        
         do{
             try context.save()
         } catch {
@@ -64,6 +48,7 @@ class CoreDataManager{
         }
         getAllItems()
     }
+    
     
     func getAllWords() -> [Words]{
         return model
@@ -90,11 +75,9 @@ class CoreDataManager{
     }
     
     func setKnown(engWord: String, known: Bool){
-//        model[index].known = known
         for word in model{
             if word.eng == engWord{
                 word.known = known
-                print("set known ", word.rus, word.eng)
             }
         }
         saveChanges()

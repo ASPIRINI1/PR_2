@@ -13,13 +13,11 @@ class KnownWordsVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     let coreData = CoreDataManager()
-    var knownArr = [Words]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -50,7 +48,6 @@ extension KnownWordsVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath) as! KnownWrodsTableViewCell
-        print("delete ", selectedCell.engLabel.text, selectedCell.rusLabel.text)
         if editingStyle == .delete{
             coreData.setKnown(engWord: selectedCell.engLabel.text ?? "nil", known: false)
             tableView.reloadData()
