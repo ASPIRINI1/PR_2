@@ -42,6 +42,10 @@ class FireBaseAPI{
            }
        }
    }
+    
+    func getDocs() -> [FireDoc]{
+        return docs
+    }
    
 //     func createNewDocument(head:String, body:String, completion: () -> Void){
 //        let db = configureFB()

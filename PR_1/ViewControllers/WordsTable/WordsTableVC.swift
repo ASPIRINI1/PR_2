@@ -13,19 +13,11 @@ class WordsTableVC: UIViewController {
     @IBOutlet weak var tableView: UITableView!
     
     let coreData = CoreDataManager()
-    let fireAPI = FireBaseAPI.shared
-    var documents: [FireDoc] = []
-
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
-        
-        fireAPI.getDocuments { docs in
-            guard docs != nil else {return}
-            self.documents = docs!
-            self.tableView.reloadData()
-        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -47,17 +39,14 @@ extension WordsTableVC: UITableViewDelegate, UITableViewDataSource{
     //MARK: DataSource
     
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-//        return coreData.getAllWords().count
-        return documents.count
+        return coreData.getAllWords().count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "WordsTableCell", for: indexPath) as! WordSTableTableViewCell
 
-//        cell.engLabel.text = coreData.getAllWords()[indexPath.row].eng
-//        cell.rusLabel.text = coreData.getAllWords()[indexPath.row].rus
-        cell.engLabel.text = documents[indexPath.row].eng
-        cell.rusLabel.text = documents[indexPath.row].rus
+        cell.engLabel.text = coreData.getAllWords()[indexPath.row].eng
+        cell.rusLabel.text = coreData.getAllWords()[indexPath.row].rus
         
         return cell
     }

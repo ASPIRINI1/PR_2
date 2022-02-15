@@ -33,7 +33,8 @@ class AddWordVC: UIViewController {
         
         if (rusTextField.text != nil && engTextField.text != nil) && (rusTextField.text != "" && engTextField.text != ""){
             
-            coreData.addItem(engText: engTextField.text!, rusText: rusTextField.text!)
+//            coreData.addItem(engText: engTextField.text!, rusText: rusTextField.text!)
+            FireBaseAPI.shared.createNewDocument()
             
             let successAletr = UIAlertController(title: "Добавление успешно", message: "Слово добавлено в архив слов.", preferredStyle: .alert)
             successAletr.addAction(UIAlertAction(title: "OK", style: .default, handler: nil))

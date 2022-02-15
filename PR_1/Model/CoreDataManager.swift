@@ -21,22 +21,24 @@ class CoreDataManager{
     func getAllItems(){
         do{
             model = try context.fetch(Words.fetchRequest())
-            print(model.count, "Count")
         } catch {
             print("Getting error")
         }
     }
     
-    func addItem(engText: String, rusText:String){
+    func addItem(engText: String, rusText:String, known: Bool, rightSelection: Int64){
         if engText != "" && rusText != ""{
             let newItem = Words(context: context)
             newItem.eng = engText
             newItem.rus = rusText
+            newItem.known = known
+            newItem.rightSelection = rightSelection
             
             saveChanges()
         } else {
             print("Empty String")
         }
+        getAllItems()
     }
     
     func deleteItem(itemIndex: Int){
@@ -97,6 +99,20 @@ class CoreDataManager{
             try context.save()
         } catch {
             print("Saving error")
+        }
+    }
+    
+    func deleteAll(){
+        for mod in model {
+            context.delete(mod)
+        }
+        print("model ", model)
+        saveChanges()
+    }
+    
+    func saveFromFireBase(docs: [FireDoc]){
+        for doc in docs{
+            addItem(engText: doc.eng, rusText: doc.rus, known: doc.known, rightSelection: Int64(doc.rightSelection))
         }
     }
   
