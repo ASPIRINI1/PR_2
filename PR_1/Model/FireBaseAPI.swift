@@ -24,7 +24,7 @@ class FireBaseAPI{
        let db = configureFB()
        db.collection(collection).document(docName).getDocument(completion:{ (document, error) in
            guard error == nil else {completion(nil);return}
-           let doc = FireDoc(eng: document?.get("eng") as! String, rus: document?.get("rus") as! String, known: document?.get("known") as! Bool, rightSelection: document?.get("rightSelection") as! Int )
+           let doc = FireDoc(eng: document?.get("eng") as! String, rus: document?.get("rus") as! String, known: document?.get("known") as! Bool, rightSelection: document?.get("rightSelection") as! Int, id: document!.documentID)
            completion(doc)
        })
    }
@@ -35,10 +35,11 @@ class FireBaseAPI{
            if let err = err {
                print("Error getting documents: \(err)")
            } else {
+               self.docs.removeAll()
                for document in querySnapshot!.documents {
-                   self.docs.append(FireDoc(eng: document.get("eng") as! String, rus: document.get("rus") as! String, known: document.get("known") as! Bool, rightSelection: document.get("rightSelection") as! Int))
-                   completion(self.docs)
+                   self.docs.append(FireDoc(eng: document.get("eng") as! String, rus: document.get("rus") as! String, known: document.get("known") as! Bool, rightSelection: document.get("rightSelection") as! Int, id: document.documentID))
                }
+               completion(self.docs)
            }
        }
    }
@@ -77,7 +78,18 @@ class FireBaseAPI{
            } else {
                print("Document successfully updated")
            }
-//       } else {print("head = empty")}
-  }
-      }}
+        }
+    }
+    
+    
+    func deleteDocument(id: String){
+        let db = configureFB()
+        db.collection("Words").document(id).delete() { err in
+            if let err = err {
+                print("Error removing document: \(err)")
+            } else {
+                print("Document successfully removed!")
+            }
+        }
+    }
 }

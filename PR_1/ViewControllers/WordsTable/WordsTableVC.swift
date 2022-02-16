@@ -47,12 +47,12 @@ extension WordsTableVC: UITableViewDelegate, UITableViewDataSource{
 
         cell.engLabel.text = coreData.getAllWords()[indexPath.row].eng
         cell.rusLabel.text = coreData.getAllWords()[indexPath.row].rus
-        
         return cell
     }
     
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         if editingStyle == .delete{
+            FireBaseAPI.shared.deleteDocument(id: coreData.getAllWords()[indexPath.row].id!)
             coreData.deleteItem(itemIndex: indexPath.row)
             tableView.reloadData()
         }

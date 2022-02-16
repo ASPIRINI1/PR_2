@@ -26,14 +26,14 @@ class CoreDataManager{
         }
     }
     
-    func addItem(engText: String, rusText:String, known: Bool, rightSelection: Int64){
+    func addItem(engText: String, rusText:String, known: Bool, rightSelection: Int64, id: String){
         if engText != "" && rusText != ""{
             let newItem = Words(context: context)
             newItem.eng = engText
             newItem.rus = rusText
             newItem.known = known
             newItem.rightSelection = rightSelection
-            
+            newItem.id = id
             saveChanges()
         } else {
             print("Empty String")
@@ -112,7 +112,7 @@ class CoreDataManager{
     
     func saveFromFireBase(docs: [FireDoc]){
         for doc in docs{
-            addItem(engText: doc.eng, rusText: doc.rus, known: doc.known, rightSelection: Int64(doc.rightSelection))
+            addItem(engText: doc.eng, rusText: doc.rus, known: doc.known, rightSelection: Int64(doc.rightSelection), id: doc.id)
         }
     }
   

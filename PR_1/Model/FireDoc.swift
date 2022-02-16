@@ -12,4 +12,5 @@ struct FireDoc{
     let rus: String
     var known: Bool
     var rightSelection: Int
+    let id: String
 }
