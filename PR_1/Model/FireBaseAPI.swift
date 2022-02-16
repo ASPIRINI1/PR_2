@@ -42,10 +42,6 @@ class FireBaseAPI{
            }
        }
    }
-    
-    func getDocs() -> [FireDoc]{
-        return docs
-    }
    
 //     func createNewDocument(head:String, body:String, completion: () -> Void){
 //        let db = configureFB()
@@ -56,16 +52,14 @@ class FireBaseAPI{
 //        } else {print("head = empty")}
 //    }
    
-   func createNewDocument(){
+    func createNewDocument(eng: String, rus: String){
       let db = configureFB()
           db.collection("Words").addDocument(data: [
-              "eng": "new eng",
-              "rus": "new rus",
+              "eng": eng,
+              "rus": rus,
               "known" : false,
               "rightSelection" : 0])
-       getDocuments { doc in
-           
-       }
+       getDocuments { _ in }
   }
    
     func updateDocument(documentInd: Int, eng:String, rus:String, known: Bool, rightSelection: Int){
