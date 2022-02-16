@@ -63,16 +63,11 @@ class FireBaseAPI{
        getDocuments { _ in }
   }
    
-    func updateDocument(documentInd: Int, eng:String, rus:String, known: Bool, rightSelection: Int){
+    func updateDocument(id: String, known: Bool){
       let db = configureFB()
-      if eng != "" && rus != ""{
-          db.collection("Words").document("Words").updateData([
-           "eng": eng,
-           "rus": rus,
-           "known" : known,
-           "rightSelection" : rightSelection
-           
-       ]) { err in
+          db.collection("Words").document(id).updateData([
+           "known" : known
+          ]) { err in
            if let err = err {
                print("Error updating document: \(err)")
            } else {

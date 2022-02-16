@@ -85,7 +85,13 @@ extension NewWordsVC: UITableViewDelegate, UITableViewDataSource{
             }
             
             if currectWord.rightSelection == 3 {
+                for word in coreData.getUnKnownWords(){
+                    if word.eng == selectedCell.engLabel.text{
+                        FireBaseAPI.shared.updateDocument(id: word.id!, known: true)
+                    }
+                }
                 coreData.setKnown(engWord: selectedCell.engLabel.text ?? "nil", known: true)
+                
                 tableView.reloadData()
             }
             

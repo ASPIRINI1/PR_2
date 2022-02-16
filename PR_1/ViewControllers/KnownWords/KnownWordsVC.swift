@@ -49,6 +49,11 @@ extension KnownWordsVC: UITableViewDelegate, UITableViewDataSource{
     func tableView(_ tableView: UITableView, commit editingStyle: UITableViewCell.EditingStyle, forRowAt indexPath: IndexPath) {
         let selectedCell = tableView.cellForRow(at: indexPath) as! KnownWrodsTableViewCell
         if editingStyle == .delete{
+            for word in coreData.getKnownWords(){
+                if word.eng == selectedCell.engLabel.text{
+                    FireBaseAPI.shared.updateDocument(id: word.id!, known: false)
+                }
+            }
             coreData.setKnown(engWord: selectedCell.engLabel.text ?? "nil", known: false)
             tableView.reloadData()
         }
