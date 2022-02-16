@@ -25,7 +25,7 @@ class NewWordsTableViewCell: UITableViewCell {
 
     func setCellColor(color:UIColor,completion: @escaping()->()){
             self.backgroundColor = color
-            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { t in
+            Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
                 self.backgroundColor = .white
                 completion()
             }

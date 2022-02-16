@@ -16,18 +16,15 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplication.LaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
         FirebaseApp.configure()
         
+        let coreData = CoreDataManager()
+        coreData.deleteAll()
         
         FireBaseAPI.shared.getDocuments { docs in
-            guard docs != nil else {return}
-            let coreData = CoreDataManager()
-            coreData.deleteAll()
-            print("docs ",docs)
             coreData.saveFromFireBase(docs: docs!)
         }
-        
-        
         return true
     }
 

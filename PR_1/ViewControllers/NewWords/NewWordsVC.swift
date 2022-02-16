@@ -18,6 +18,10 @@ class NewWordsVC: UIViewController {
         super.viewDidLoad()
         tableView.delegate = self
         tableView.dataSource = self
+        Timer.scheduledTimer(withTimeInterval: 1, repeats: false) { _ in
+            self.coreData.getAllItems()
+            self.tableView.reloadData()
+        }
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -46,7 +50,7 @@ extension NewWordsVC: UITableViewDelegate, UITableViewDataSource{
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
         let cell = tableView.dequeueReusableCell(withIdentifier: "NewWordsCell", for: indexPath) as! NewWordsTableViewCell
-
+        
         if countOfUncorrectPairs > 1{
             if  Int.random(in: 0...2) == 0 {
                 cell.rusLabel.text = coreData.getUnKnownWords()[indexPath.row].rus
